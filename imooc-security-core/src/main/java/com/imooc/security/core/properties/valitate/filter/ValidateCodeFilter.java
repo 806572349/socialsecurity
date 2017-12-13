@@ -2,6 +2,7 @@ package com.imooc.security.core.properties.valitate.filter;
 
 import com.imooc.security.core.properties.SecurityProperties;
 import com.imooc.security.core.properties.valitate.code.ImageCode;
+import com.imooc.security.core.properties.valitate.code.ValidateCode;
 import com.imooc.security.core.properties.valitate.code.controller.ValidateCodeContoller;
 import com.imooc.security.core.properties.valitate.code.exception.ValidateCodeException;
 import org.apache.commons.lang.StringUtils;
@@ -73,7 +74,7 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
     }
     //校验验证码
     private void validate(ServletWebRequest request) throws ServletRequestBindingException {
-        ImageCode imageCode = (ImageCode) sessionStrategy.getAttribute(request, ValidateCodeContoller.session_key);
+        ValidateCode imageCode = (ImageCode) sessionStrategy.getAttribute(request, ValidateCodeContoller.session_key);
         String codeInRequest = ServletRequestUtils.getStringParameter(request.getRequest(), "imageCode");
 
         if (StringUtils.isBlank(codeInRequest)){

@@ -62,6 +62,8 @@ public class ValidateCodeContoller {
 
     @Autowired
     private Map<String, ValidateCodeProcessor> validateCodeProcessors;
+
+
     @GetMapping("/code" + "/{type}")
     public void createCode(HttpServletRequest request, HttpServletResponse response, @PathVariable String type)
             throws Exception {
@@ -72,11 +74,12 @@ public class ValidateCodeContoller {
             logger.info(next);
 //            "imageValidateCodeProcessor"
         }
-        ValidateCodeProcessor imageValidateCodeProcessor = validateCodeProcessors.get("imageValidateCodeProcessor");
+        String name = type.toLowerCase() + ValidateCodeProcessor.class.getSimpleName();
+        ValidateCodeProcessor imageValidateCodeProcessor = validateCodeProcessors.get(name);
         if (imageValidateCodeProcessor==null){
             logger.warn("为空");
         }
-        validateCodeProcessors.get("imageValidateCodeProcessor").create(new ServletWebRequest(request));
+        imageValidateCodeProcessor.create(new ServletWebRequest(request,response));
     }
 
 }

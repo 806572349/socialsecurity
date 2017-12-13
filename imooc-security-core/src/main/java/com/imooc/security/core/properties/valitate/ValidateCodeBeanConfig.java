@@ -15,8 +15,9 @@ public class ValidateCodeBeanConfig {
 
 
     @Bean
-    @ConditionalOnMissingBean(name = "imageCodeGenerator") //不存在这样的bean 才实现下面；
-    public ValidateCodeGenerator validateCodeGenerator(){
+    @ConditionalOnMissingBean(name = "imageCodeGenerators") //不存在这样的bean 才实现下面；
+//    @ConditionalOnMissingBean(ValidateCodeGenerator.class)
+    public ValidateCodeGenerator imageCodeGenerator(){
         ImageCodeGenerator imageCodeGenerator = new ImageCodeGenerator();
         imageCodeGenerator.setSecurityProperties(securityProperties);
         return imageCodeGenerator;

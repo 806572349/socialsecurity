@@ -39,22 +39,8 @@ public abstract class AbstractValidateCodeProcessor<C extends ValidateCode> impl
      */
     @SuppressWarnings("unchecked")
     private C generate(ServletWebRequest request) {
-        String type = getProcessorTyper(request).toString().toLowerCase();
-        String generatorName = type + ValidateCodeGenerator.class.getSimpleName();
-//        logger.info("type:"+type+"generatorName:"+generatorName);
-        ValidateCodeGenerator validateCodeGenerator = validateCodeGenerators.get(generatorName);
-        Set<String> keySet = validateCodeGenerators.keySet();
-        Iterator<String> iterator = keySet.iterator();
-        while (iterator.hasNext()){
-            String next = iterator.next();
-            logger.info(next);
-//            "imageValidateCodeProcessor"
-        }
-
-        if (validateCodeGenerator == null) {
-            logger.warn("验证码生成器"+generatorName+"不存在");
-            throw new ValidateCodeException("验证码生成器" + generatorName + "不存在");
-        }
+        String type = getProcessorTyper(request).toString();
+        ValidateCodeGenerator validateCodeGenerator = validateCodeGenerators.get(type+"CodeGenerator");
         return (C) validateCodeGenerator.creadeImageCode(request.getRequest());
     }
     /**
