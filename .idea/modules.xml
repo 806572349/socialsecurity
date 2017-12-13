@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/imooc-security.iml" filepath="$PROJECT_DIR$/.idea/modules/imooc-security.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/imooc-security-app.iml" filepath="$PROJECT_DIR$/.idea/modules/imooc-security-app.iml" group="imooc-security-app" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/imooc-security-app/imooc-security-app_main.iml" filepath="$PROJECT_DIR$/.idea/modules/imooc-security-app/imooc-security-app_main.iml" group="imooc-security-app" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/imooc-security-app/imooc-security-app_test.iml" filepath="$PROJECT_DIR$/.idea/modules/imooc-security-app/imooc-security-app_test.iml" group="imooc-security-app" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/imooc-security-browser.iml" filepath="$PROJECT_DIR$/.idea/modules/imooc-security-browser.iml" group="imooc-security-browser" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/imooc-security-browser/imooc-security-browser_main.iml" filepath="$PROJECT_DIR$/.idea/modules/imooc-security-browser/imooc-security-browser_main.iml" group="imooc-security-browser" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/imooc-security-browser/imooc-security-browser_test.iml" filepath="$PROJECT_DIR$/.idea/modules/imooc-security-browser/imooc-security-browser_test.iml" group="imooc-security-browser" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/imooc-security-core.iml" filepath="$PROJECT_DIR$/.idea/modules/imooc-security-core.iml" group="imooc-security-core" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/imooc-security-core/imooc-security-core_main.iml" filepath="$PROJECT_DIR$/.idea/modules/imooc-security-core/imooc-security-core_main.iml" group="imooc-security-core" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/imooc-security-core/imooc-security-core_test.iml" filepath="$PROJECT_DIR$/.idea/modules/imooc-security-core/imooc-security-core_test.iml" group="imooc-security-core" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/imooc-security-demo.iml" filepath="$PROJECT_DIR$/.idea/modules/imooc-security-demo.iml" group="imooc-security-demo" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/imooc-security-demo/imooc-security-demo_main.iml" filepath="$PROJECT_DIR$/.idea/modules/imooc-security-demo/imooc-security-demo_main.iml" group="imooc-security-demo" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/imooc-security-demo/imooc-security-demo_test.iml" filepath="$PROJECT_DIR$/.idea/modules/imooc-security-demo/imooc-security-demo_test.iml" group="imooc-security-demo" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/imooc-security_main.iml" filepath="$PROJECT_DIR$/.idea/modules/imooc-security_main.iml" group="imooc-security" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/imooc-security_test.iml" filepath="$PROJECT_DIR$/.idea/modules/imooc-security_test.iml" group="imooc-security" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/imooc..security.app/imooc..security.app.iml" filepath="$PROJECT_DIR$/.idea/modules/imooc..security.app/imooc..security.app.iml" group="imooc..security.app" />
+    </modules>
+  </component>
+</project>

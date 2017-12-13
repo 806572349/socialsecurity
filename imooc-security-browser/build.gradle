@@ -1,0 +1,8 @@
+
+
+dependencies{
+    compile project(':imooc-security-core')
+    // https://mvnrepository.com/artifact/org.springframework.session/spring-session
+    compile group: 'org.springframework.session', name: 'spring-session', version: '2.0.0.M2'
+
+}

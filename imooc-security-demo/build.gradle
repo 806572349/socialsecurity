@@ -1,0 +1,6 @@
+
+dependencies{
+    compile project(':imooc-security-browser')
+    compile project(':imooc-security-core')
+    compile('org.springframework.boot:spring-boot-starter-web')
+}
