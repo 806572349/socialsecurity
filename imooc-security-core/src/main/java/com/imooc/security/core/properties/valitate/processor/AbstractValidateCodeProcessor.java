@@ -40,6 +40,7 @@ public abstract class AbstractValidateCodeProcessor<C extends ValidateCode> impl
     @SuppressWarnings("unchecked")
     private C generate(ServletWebRequest request) {
         String type = getProcessorTyper(request).toString();
+        logger.info("type:"+type);
         ValidateCodeGenerator validateCodeGenerator = validateCodeGenerators.get(type+"CodeGenerator");
         return (C) validateCodeGenerator.creadeImageCode(request.getRequest());
     }
@@ -51,12 +52,18 @@ public abstract class AbstractValidateCodeProcessor<C extends ValidateCode> impl
      */
     private void save(ServletWebRequest request, C validateCode) {
         ValidateCode code = new ValidateCode(validateCode.getCode(), validateCode.getExpireTime());
-        sessionStrategy.setAttribute(request,session_key,code);
+        logger.info("getSessionKey:"+getSessionKey(request));
+        sessionStrategy.setAttribute(request,getSessionKey(request),code);
     }
     private ValidateCodeType getValidateCodeType(ServletWebRequest request) {
         String type = StringUtils.substringBefore(getClass().getSimpleName(), "CodeProcessor");
         logger.info("ValidateCodeType:"+type);
         return ValidateCodeType.valueOf(type.toUpperCase());
+    }
+
+
+    private String getSessionKey(ServletWebRequest request) {
+        return session_key + getValidateCodeType(request).toString().toUpperCase();
     }
     /**
      * 发送校验码，由子类实现

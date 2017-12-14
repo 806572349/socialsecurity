@@ -28,7 +28,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 //InitializingBean 在初始化完毕之后
-public class ValidateCodeFilter extends OncePerRequestFilter implements InitializingBean{
+public class SmmValidateCodeFilter extends OncePerRequestFilter implements InitializingBean{
     @Autowired
     AuthenticationFailureHandler authenticationFailureHandler;
     private SessionStrategy sessionStrategy=new HttpSessionSessionStrategy();
@@ -41,13 +41,13 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
     @Override
     public void afterPropertiesSet() throws ServletException {
         super.afterPropertiesSet();
-        String[] configUrls=StringUtils.splitByWholeSeparatorPreserveAllTokens(securityProperties.getCode().getImage().getUrl(),",");
+        String[] configUrls=StringUtils.splitByWholeSeparatorPreserveAllTokens(securityProperties.getCode().getSms().getUrl(),",");
         for (String url:
              configUrls) {
             urls.add(url);
 
         }
-        urls.add("/authenticaiton/form");
+        urls.add("/authentication/mobile");
 
     }
 
@@ -74,9 +74,9 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
     }
     //校验验证码
     private void validate(ServletWebRequest request) throws ServletRequestBindingException {
-        ValidateCode imageCode = (ValidateCode) sessionStrategy.getAttribute(request, ValidateCodeContoller.session_key+"IMAGE");
-        String codeInRequest = ServletRequestUtils.getStringParameter(request.getRequest(), "imageCode");
-
+        ValidateCode imageCode = (ValidateCode) sessionStrategy.getAttribute(request, ValidateCodeContoller.session_key+"SMS");
+        String codeInRequest = ServletRequestUtils.getStringParameter(request.getRequest(), "smsCode");
+        logger.info("codeInRequest:"+codeInRequest);
         if (StringUtils.isBlank(codeInRequest)){
             logger.info("验证码不能空");
             throw new ValidateCodeException("验证码不能空");
@@ -88,7 +88,7 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
         }
         if (imageCode.isExpried()){
             logger.info("验证码过期额");
-            sessionStrategy.removeAttribute(request,ValidateCodeContoller.session_key+"IMAGE");
+            sessionStrategy.removeAttribute(request,ValidateCodeContoller.session_key+"SMS");
             throw new ValidateCodeException("验证码过期额");
         }
         if (!StringUtils.equals(imageCode.getCode(),codeInRequest)){
@@ -96,7 +96,7 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
             throw  new ValidateCodeException("验证码不匹配");
         }
 
-        sessionStrategy.removeAttribute(request,ValidateCodeContoller.session_key+"IMAGE");
+        sessionStrategy.removeAttribute(request,ValidateCodeContoller.session_key+"SMS");
 
     }
 

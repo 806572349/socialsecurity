@@ -40,41 +40,38 @@
         </tr>
     </table>
 
-    <h2>短信登录</h2>
-    <h3></h3>
-    <form action="/authentication/mobile" method="post">
-        <table>
-            <tr>
-                <td>
-                    手机号
-                </td>
-                <td><input type="text" name="mobile" value="12345678910"/></td>
 
-            </tr>
-            <tr>
-                <td>
-                    密码
-                </td>
-                <td><input type="password" name="password"/></td>
 
-            </tr>
-            <tr>
-                <td>短信验证码</td>
-                <td >
-                    <input type="text" name="smsCode">
-                    <a href="/code/sms?mobile=12345678910">发送验证码</a>
-                </td>
-            </tr>
-            <!--<tr>-->
-            <!--<td colspan="2"><input type="checkbox" name="remember-me"value="true">记住我</input></td>-->
-            <!--</tr>-->
-            <tr>
-                <td colspan="2"><button type="submit">登录</button></td>
-            </tr>
+</form>
 
-        </table>
 
-    </form>
+<h2>短信登录</h2>
+<h3></h3>
+<form action="/authentication/mobile" method="post">
+    <table>
+        <tr>
+            <td>
+                手机号
+            </td>
+            <td><input type="text" name="mobile" value="12345678910"/></td>
+
+        </tr>
+
+        <tr>
+            <td>短信验证码</td>
+            <td >
+                <input type="text" name="smsCode">
+                <a href="/code/sms?mobile=12345678910">发送验证码</a>
+            </td>
+        </tr>
+        <!--<tr>-->
+        <!--<td colspan="2"><input type="checkbox" name="remember-me"value="true">记住我</input></td>-->
+        <!--</tr>-->
+        <tr>
+            <td colspan="2"><button type="submit">登录</button></td>
+        </tr>
+
+    </table>
 
 </form>
 </body>

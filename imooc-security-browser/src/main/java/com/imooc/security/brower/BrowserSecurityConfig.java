@@ -1,6 +1,9 @@
 package com.imooc.security.brower;
 
+import com.imooc.security.core.authentication.mobile.SmsCodeAuthenticationFilter;
+import com.imooc.security.core.authentication.mobile.config.SmsCodeAuthenticationSecurityConfig;
 import com.imooc.security.core.properties.SecurityProperties;
+import com.imooc.security.core.properties.valitate.filter.SmmValidateCodeFilter;
 import com.imooc.security.core.properties.valitate.filter.ValidateCodeFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -25,7 +28,7 @@ public class BrowserSecurityConfig  extends WebSecurityConfigurerAdapter{
     @Autowired
     private SecurityProperties securityProperties;
 
-    ValidateCodeFilter validateCodeFilter=new ValidateCodeFilter();
+
 
     @Autowired
     private AuthenticationSuccessHandler authenticationSuccessHandler;
@@ -41,6 +44,9 @@ public class BrowserSecurityConfig  extends WebSecurityConfigurerAdapter{
     private DataSource dataSource;
     @Autowired
     private UserDetailsService userDetailsService;
+
+    @Autowired
+    private SmsCodeAuthenticationSecurityConfig smsCodeAuthenticationSecurityConfig;
     @Bean
     public PersistentTokenRepository persistentTokenRepository(){
         JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
@@ -55,11 +61,19 @@ public class BrowserSecurityConfig  extends WebSecurityConfigurerAdapter{
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        ValidateCodeFilter validateCodeFilter=new ValidateCodeFilter();
         validateCodeFilter.setAuthenticationFailureHandler(authenticationFailureHandler);
         validateCodeFilter.setSecurityProperties(securityProperties);
         validateCodeFilter.afterPropertiesSet();
 
-        http.addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)
+        SmmValidateCodeFilter smmValidateCodeFilter=new SmmValidateCodeFilter();
+        smmValidateCodeFilter.setAuthenticationFailureHandler(authenticationFailureHandler);
+        smmValidateCodeFilter.setSecurityProperties(securityProperties);
+        smmValidateCodeFilter.afterPropertiesSet();
+
+        http
+                .addFilterBefore(smmValidateCodeFilter,UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)
                 .formLogin()
                 .loginPage("/authenticaiton/require")
                 .loginProcessingUrl("/authenticaiton/form")
@@ -72,9 +86,9 @@ public class BrowserSecurityConfig  extends WebSecurityConfigurerAdapter{
                 .userDetailsService(userDetailsService)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/authenticaiton/require",securityProperties.getBrower().getLoginPage(),"/code/*").permitAll()
+                .antMatchers("/authenticaiton/require",securityProperties.getBrower().getLoginPage(),"/code/*","/authentication/mobile").permitAll()
                 .anyRequest()
                 .authenticated()
-        .and().csrf().disable();
+        .and().csrf().disable().apply(smsCodeAuthenticationSecurityConfig);
     }
 }
