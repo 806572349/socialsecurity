@@ -8,6 +8,16 @@ public class SecurityProperties {
     private  BrowerProperties brower=new BrowerProperties();
     private ValidateCodeProperties code=new ValidateCodeProperties();
 
+    private Oauth2Porperties oauth2=new Oauth2Porperties();
+
+    public Oauth2Porperties getOauth2() {
+        return oauth2;
+    }
+
+    public void setOauth2(Oauth2Porperties oauth2) {
+        this.oauth2 = oauth2;
+    }
+
     public ValidateCodeProperties getCode() {
         return code;
     }

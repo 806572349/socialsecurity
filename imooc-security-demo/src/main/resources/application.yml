@@ -14,9 +14,15 @@ spring:
   session:
     store-type: none
 
+
+
+
+
 security:
-  basic:
-    enabled: true
+  oauth2:
+    client:
+      client-id: imooc
+      client-secret: imooc
 server:
   port: 8060
 imooc:
@@ -31,7 +37,19 @@ imooc:
           length: 3
           expireIn: 120
 #          url: /user,/user/* 这些连接都是需要验证码
-
-
+      oauth2:
+          clients[0]:
+                clientId: android
+                clientSecret: android
+                accessTokenValiditySeconds: 6000
+          clients[1]:
+                clientId: imooc
+                clientSecret: imooc
+                accessTokenValiditySeconds: 9999
+          clients[2]:
+                clientId: laosiji
+                clientSecret: laosiji
+                accessTokenValiditySeconds: 9999
+          storeType: redis
 
 

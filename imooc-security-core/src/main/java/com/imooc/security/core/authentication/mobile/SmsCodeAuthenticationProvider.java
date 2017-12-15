@@ -1,5 +1,7 @@
 package com.imooc.security.core.authentication.mobile;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.Authentication;
@@ -9,6 +11,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 
 public class SmsCodeAuthenticationProvider implements AuthenticationProvider{
     private UserDetailsService userDetailsService;
+     //日志
+      private Logger logger= LoggerFactory.getLogger(getClass());
+
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
@@ -16,6 +21,7 @@ public class SmsCodeAuthenticationProvider implements AuthenticationProvider{
         String mobile = (String) smsCodeAuthenticationToken.getPrincipal();
         UserDetails userDetails = userDetailsService.loadUserByUsername(mobile);
         if (userDetails==null){
+            logger.warn("无法获取用户信息");
             throw  new InternalAuthenticationServiceException("无法获取用户信息");
         }
         SmsCodeAuthenticationToken token=new SmsCodeAuthenticationToken(userDetails,userDetails.getAuthorities());

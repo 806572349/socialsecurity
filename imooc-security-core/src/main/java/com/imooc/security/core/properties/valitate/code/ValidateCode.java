@@ -1,9 +1,10 @@
 package com.imooc.security.core.properties.valitate.code;
 
 import java.awt.image.BufferedImage;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class ValidateCode {
+public class ValidateCode implements Serializable{
 
     private  String code;
     private LocalDateTime expireTime;

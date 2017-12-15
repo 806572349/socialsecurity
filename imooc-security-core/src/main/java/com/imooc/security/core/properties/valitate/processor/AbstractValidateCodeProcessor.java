@@ -2,6 +2,7 @@ package com.imooc.security.core.properties.valitate.processor;
 
 import com.imooc.security.core.properties.valitate.ValidateCodeGenerator;
 import com.imooc.security.core.properties.valitate.ValidateCodeProcessor;
+import com.imooc.security.core.properties.valitate.ValidateCodeRepository;
 import com.imooc.security.core.properties.valitate.code.ValidateCode;
 import com.imooc.security.core.properties.valitate.code.ValidateCodeType;
 import com.imooc.security.core.properties.valitate.code.exception.ValidateCodeException;
@@ -19,6 +20,9 @@ import java.util.Set;
 
 public abstract class AbstractValidateCodeProcessor<C extends ValidateCode> implements ValidateCodeProcessor {
     private SessionStrategy sessionStrategy=new HttpSessionSessionStrategy();
+
+    @Autowired
+    ValidateCodeRepository redisValidateCodeRepository;
      //日志
       private Logger logger= LoggerFactory.getLogger(getClass());
       //ValidateCodeProcessor
@@ -54,6 +58,7 @@ public abstract class AbstractValidateCodeProcessor<C extends ValidateCode> impl
         ValidateCode code = new ValidateCode(validateCode.getCode(), validateCode.getExpireTime());
         logger.info("getSessionKey:"+getSessionKey(request));
         sessionStrategy.setAttribute(request,getSessionKey(request),code);
+//        redisValidateCodeRepository.save(request,code,getSessionKey(request));
     }
     private ValidateCodeType getValidateCodeType(ServletWebRequest request) {
         String type = StringUtils.substringBefore(getClass().getSimpleName(), "CodeProcessor");

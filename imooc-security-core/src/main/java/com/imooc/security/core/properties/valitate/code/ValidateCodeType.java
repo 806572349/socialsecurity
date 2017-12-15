@@ -5,7 +5,7 @@ package com.imooc.security.core.properties.valitate.code;
 
 
 /**
- * @author zhailiang
+ *
  *
  */
 public enum ValidateCodeType {

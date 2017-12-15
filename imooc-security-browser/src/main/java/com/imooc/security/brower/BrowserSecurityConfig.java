@@ -2,6 +2,7 @@ package com.imooc.security.brower;
 
 import com.imooc.security.core.authentication.mobile.SmsCodeAuthenticationFilter;
 import com.imooc.security.core.authentication.mobile.config.SmsCodeAuthenticationSecurityConfig;
+import com.imooc.security.core.authorize.AuthorizeConfigManger;
 import com.imooc.security.core.properties.SecurityProperties;
 import com.imooc.security.core.properties.valitate.filter.SmmValidateCodeFilter;
 import com.imooc.security.core.properties.valitate.filter.ValidateCodeFilter;
@@ -57,7 +58,8 @@ public class BrowserSecurityConfig  extends WebSecurityConfigurerAdapter{
     }
     //endregion
 
-
+    /*@Autowired
+    AuthorizeConfigManger authorizeConfigManger;*/
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -90,5 +92,8 @@ public class BrowserSecurityConfig  extends WebSecurityConfigurerAdapter{
                 .anyRequest()
                 .authenticated()
         .and().csrf().disable().apply(smsCodeAuthenticationSecurityConfig);
+
+        //自定义授权
+//        authorizeConfigManger.config(http.authorizeRequests());
     }
 }

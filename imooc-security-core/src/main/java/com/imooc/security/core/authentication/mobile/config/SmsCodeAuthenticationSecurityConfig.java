@@ -3,7 +3,9 @@ package com.imooc.security.core.authentication.mobile.config;
 import com.imooc.security.core.authentication.mobile.SmsCodeAuthenticationFilter;
 import com.imooc.security.core.authentication.mobile.SmsCodeAuthenticationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -37,4 +39,5 @@ public class SmsCodeAuthenticationSecurityConfig extends SecurityConfigurerAdapt
                 .addFilterAfter(smsCodeAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
     }
+
 }
