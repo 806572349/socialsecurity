@@ -21,8 +21,8 @@ import java.util.Set;
 public abstract class AbstractValidateCodeProcessor<C extends ValidateCode> implements ValidateCodeProcessor {
     private SessionStrategy sessionStrategy=new HttpSessionSessionStrategy();
 
-    @Autowired
-    ValidateCodeRepository redisValidateCodeRepository;
+    /*@Autowired
+    ValidateCodeRepository redisValidateCodeRepository;*/
      //日志
       private Logger logger= LoggerFactory.getLogger(getClass());
       //ValidateCodeProcessor

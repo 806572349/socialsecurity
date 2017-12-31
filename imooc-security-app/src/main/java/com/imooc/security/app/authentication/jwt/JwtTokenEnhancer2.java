@@ -11,7 +11,7 @@ import java.util.Map;
 /**
  *
  */
-public class JwtTokenEnhancer implements TokenEnhancer {
+public class JwtTokenEnhancer2 implements TokenEnhancer {
     private Map<String,Object> map;
 
     public void setMap(Map<String, Object> map) {
@@ -21,7 +21,7 @@ public class JwtTokenEnhancer implements TokenEnhancer {
     @Override
     public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
         Map<String,Object> map=new HashMap<>();
-        map.put("csn","csn");
+        map.put("csn","66666666666666666666666666");
         ((DefaultOAuth2AccessToken)(accessToken)).setAdditionalInformation(map);
         return accessToken;
     }

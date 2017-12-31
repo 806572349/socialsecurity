@@ -40,8 +40,8 @@ public class SmmValidateCodeFilter extends OncePerRequestFilter implements Initi
     private Set<String> urls=new HashSet<>();
     private SecurityProperties securityProperties;
     private AntPathMatcher pathMatcher=new AntPathMatcher();
-    @Autowired
-    private ValidateCodeRepository redisValidateCodeRepository;
+//    @Autowired
+//    private ValidateCodeRepository redisValidateCodeRepository;
     @Autowired
     private RedisTemplate<Object, Object> redisTemplate;
      //日志
@@ -73,7 +73,7 @@ public class SmmValidateCodeFilter extends OncePerRequestFilter implements Initi
         }
             if (action){
                     try {
-                        validate(new ServletWebRequest(request));
+//                        validate(new ServletWebRequest(request));
                     }catch (ValidateCodeException ex){
                         authenticationFailureHandler.onAuthenticationFailure(request,response,ex);
                         return;
@@ -83,7 +83,7 @@ public class SmmValidateCodeFilter extends OncePerRequestFilter implements Initi
             filterChain.doFilter(request,response);
     }
     //校验验证码
-    private void validate(ServletWebRequest request) throws ServletRequestBindingException {
+    /*private void validate(ServletWebRequest request) throws ServletRequestBindingException {
         ValidateCode imageCode = (ValidateCode) sessionStrategy.getAttribute(request, ValidateCodeContoller.session_key+"SMS");
 //        session_keySMS
         if (redisTemplate==null){
@@ -121,7 +121,7 @@ public class SmmValidateCodeFilter extends OncePerRequestFilter implements Initi
 
         sessionStrategy.removeAttribute(request,ValidateCodeContoller.session_key+"SMS");
 //        redisValidateCodeRepository.remove(request,session_key+"SMS");
-    }
+    }*/
 
     private ValidateCodeType getValidateCodeType(ServletWebRequest request) {
         String type = StringUtils.substringBefore(getClass().getSimpleName(), "CodeProcessor");

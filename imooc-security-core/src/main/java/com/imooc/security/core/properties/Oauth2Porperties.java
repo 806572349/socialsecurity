@@ -2,7 +2,7 @@ package com.imooc.security.core.properties;
 
 public class Oauth2Porperties {
     private  Oauth2ClientProperties[] clients={};
-    private  String jwtkey="imooc";
+    private  String jwtkey="yunbao";
 
     public String getJwtkey() {
         return jwtkey;

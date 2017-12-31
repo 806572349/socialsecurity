@@ -19,6 +19,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import org.springframework.social.security.SpringSocialConfigurer;
 
 import javax.sql.DataSource;
 
@@ -48,6 +49,9 @@ public class BrowserSecurityConfig  extends WebSecurityConfigurerAdapter{
 
     @Autowired
     private SmsCodeAuthenticationSecurityConfig smsCodeAuthenticationSecurityConfig;
+
+    @Autowired
+    private SpringSocialConfigurer springSocialConfigurer;
     @Bean
     public PersistentTokenRepository persistentTokenRepository(){
         JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
@@ -82,13 +86,16 @@ public class BrowserSecurityConfig  extends WebSecurityConfigurerAdapter{
                 .successHandler(authenticationSuccessHandler)
                 .failureHandler(authenticationFailureHandler)
                 .and()
-                .rememberMe()
-                .tokenRepository(persistentTokenRepository())
-                .tokenValiditySeconds(securityProperties.getBrower().getRememberMeSeconds())
-                .userDetailsService(userDetailsService)
+//                .rememberMe()
+//                .tokenRepository(persistentTokenRepository())
+//                .tokenValiditySeconds(securityProperties.getBrower().getRememberMeSeconds())
+//                .userDetailsService(userDetailsService)
+                .apply(springSocialConfigurer)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/authenticaiton/require",securityProperties.getBrower().getLoginPage(),"/code/*","/authentication/mobile").permitAll()
+                .antMatchers("/authenticaiton/require",securityProperties.getBrower().getLoginPage(),"/code/*","/authentication/mobile",
+                        securityProperties.getBrower().getSignUp()
+                        ).permitAll()
                 .anyRequest()
                 .authenticated()
         .and().csrf().disable().apply(smsCodeAuthenticationSecurityConfig);

@@ -13,7 +13,14 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
   session:
     store-type: none
-
+  data:
+#    mongodb:
+##      uri: mongodb://root:pass@127.0.0.1:27017/lsj
+#      port: 27017
+#      host: 139.199.86.67
+#      username: laosiji
+#      password: laosiji123laosiji
+#      database: laosiji
 
 
 
@@ -23,13 +30,22 @@ security:
     client:
       client-id: imooc
       client-secret: imooc
+  basic:
+    enabled: true
 server:
-  port: 8060
+  port: 80
 imooc:
     security:
+      social:
+        qq:
+          app-id: 101446051
+          app-secret: fb22bebd3dc0cb317088fcfd11535e55
+          providerId: callback.do
+        filterProcessUrl: /qqlogin
       brower:
 #        loginPage: /demo-signIn.html
         loginType: JSON
+        signUp: /demo-signUp.html
       code:
         image:
           width: 200
@@ -42,14 +58,23 @@ imooc:
                 clientId: android
                 clientSecret: android
                 accessTokenValiditySeconds: 6000
+                refeshTokenValiditySeconds: 20000
           clients[1]:
                 clientId: imooc
                 clientSecret: imooc
                 accessTokenValiditySeconds: 9999
+                refeshTokenValiditySeconds: 20000
           clients[2]:
                 clientId: laosiji
                 clientSecret: laosiji
-                accessTokenValiditySeconds: 9999
-          storeType: redis
+                accessTokenValiditySeconds: 2592000
+                refeshTokenValiditySeconds: 5184000
+          clients[3]:
+                clientId: yb
+                clientSecret: yb
+                accessTokenValiditySeconds: 2592000
+                refeshTokenValiditySeconds: 5184000
+          storeType: jwt
+          jwtkey: yunbao
 
 

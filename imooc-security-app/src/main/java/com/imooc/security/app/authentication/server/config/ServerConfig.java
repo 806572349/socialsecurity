@@ -51,25 +51,21 @@ public class ServerConfig  extends AuthorizationServerConfigurerAdapter{
         if (jwtAccessTokenConverter!=null){
 
             JwtTokenEnhancer jwtTokenEnhancer=new JwtTokenEnhancer();
-            TokenEnhancerChain tokenEnhancerChain=new TokenEnhancerChain();
+            TokenEnhancerChain tokenEnhancerChain=new TokenEnhancerChain(); //增强器
             List<TokenEnhancer> list=new ArrayList<>();
             list.add(jwtTokenEnhancer);
             list.add(jwtAccessTokenConverter);
             tokenEnhancerChain.setTokenEnhancers(list);
             endpoints.tokenEnhancer(tokenEnhancerChain);
         }
+
         endpoints.accessTokenConverter(jwtAccessTokenConverter);
     }
 
     //客户端获取令牌 这个方法可以再配置文件配置
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-      /*  clients.inMemory().withClient("imooc")
-                .secret("imooc")
-                .accessTokenValiditySeconds(7200)
-                .authorizedGrantTypes("refresh_token","passwrod")//授权模式
-                .scopes("all","write")
-        .and().withClient("xxxx")*/
+
         InMemoryClientDetailsServiceBuilder builder = clients.inMemory();
         if (ArrayUtils.isNotEmpty(securityProperties.getOauth2().getClients())){
             for (Oauth2ClientProperties config:
@@ -77,7 +73,8 @@ public class ServerConfig  extends AuthorizationServerConfigurerAdapter{
                 builder.withClient(config.getClientId())
                         .secret(config.getClientSecret())
                         .accessTokenValiditySeconds(config.getAccessTokenValiditySeconds())
-                        .authorizedGrantTypes("refresh_token","password")//授权模式
+                        .refreshTokenValiditySeconds(config.getRefeshTokenValiditySeconds())
+                        .authorizedGrantTypes("refresh_token","password","authorization_code")//授权模式
                         .scopes("all","write");
             }
         }

@@ -18,11 +18,11 @@ import org.springframework.security.oauth2.provider.token.store.redis.RedisToken
 @Configuration
 @ConditionalOnProperty(prefix = "imooc.security.oauth2",name = "storeType",havingValue = "redis")
 public class TokenStoreConfig {
+    @Autowired
+    private SecurityProperties securityProperties;
 
     @Autowired
     private RedisConnectionFactory redisConnectionFactory;
-    @Autowired
-    private SecurityProperties securityProperties;
 
     @Bean
     public TokenStore redisTokenStore() {

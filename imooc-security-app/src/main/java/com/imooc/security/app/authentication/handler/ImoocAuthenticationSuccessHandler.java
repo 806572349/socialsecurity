@@ -1,5 +1,7 @@
 package com.imooc.security.app.authentication.handler;
 
+import com.imooc.security.app.authentication.jwt.JwtTokenEnhancer;
+import com.imooc.security.app.authentication.jwt.JwtTokenEnhancer2;
 import com.imooc.security.core.properties.LoginType;
 import com.imooc.security.core.properties.SecurityProperties;
 import org.apache.commons.collections.MapUtils;
@@ -8,6 +10,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -15,9 +18,14 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.codec.Base64;
+import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.*;
 import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
+import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
+import org.springframework.security.oauth2.provider.token.TokenEnhancer;
+import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
+import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
@@ -25,6 +33,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 //重构账号密码登录
 //登录成功就会被调用
 @Component("ImoocAuthenticationSuccessHandler")
@@ -45,7 +58,8 @@ public class ImoocAuthenticationSuccessHandler extends SavedRequestAwareAuthenti
      */
     @Autowired
     ClientDetailsService clientDetailsService;
-
+    @Autowired
+    private JwtAccessTokenConverter jwtAccessTokenConverter;
 
     @Autowired
     private AuthorizationServerTokenServices authorizationServerTokenServices;
@@ -89,6 +103,13 @@ public class ImoocAuthenticationSuccessHandler extends SavedRequestAwareAuthenti
         OAuth2Authentication oAuth2Authentication = new OAuth2Authentication(oAuth2Request, authentication);
 
         OAuth2AccessToken accessToken = authorizationServerTokenServices.createAccessToken(oAuth2Authentication);
+      /*  JwtTokenEnhancer2 jwtTokenEnhancer=new JwtTokenEnhancer2();
+        TokenEnhancerChain tokenEnhancerChain=new TokenEnhancerChain(); //增强器
+        List<TokenEnhancer> list=new ArrayList<>();
+        list.add(jwtTokenEnhancer);
+        list.add(jwtAccessTokenConverter);
+        tokenEnhancerChain.setTokenEnhancers(list);
+        OAuth2AccessToken oAuth2AccessToken = tokenEnhancerChain.enhance(accessToken, oAuth2Authentication);*/
 
         response.setContentType("application/json;charset=utf-8");
 
